@@ -3,12 +3,14 @@ from spotipy.oauth2 import SpotifyClientCredentials
 import cred
 
 client_credentials_manager = SpotifyClientCredentials(
-    client_id=cred.client_ID, client_secret=cred.client_SECRET
-)
+    client_id=cred.client_ID, client_secret=cred.client_SECRET)
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
+
 def get_artist_id(artist_name):
-    
+    artist = sp.search(f"name:{artist_name}&type=artist")
+    return artist
+
 
 def get_albums(artist_id):
     album = sp.artist_albums(artist_id, album_type="album")
@@ -21,10 +23,8 @@ def get_tracks(album_id):
 
 
 get_albums(
-    "https://open.spotify.com/artist/36QJpDe2go2KgaRleHCDTp?si=L_nga3lOT02AkK2YN8mCLA"
-)
+    "https://open.spotify.com/artist/36QJpDe2go2KgaRleHCDTp?si=L_nga3lOT02AkK2YN8mCLA")
 get_tracks(
-    "https://open.spotify.com/album/6VH2op0GKIl3WNTbZmmcmI?si=1XxL9nRaQrOm2im6MDayPA"
-)
+    "https://open.spotify.com/album/6VH2op0GKIl3WNTbZmmcmI?si=1XxL9nRaQrOm2im6MDayPA")
 
-
+print(get_artist_id("Led Zeppelin"))
