@@ -1,15 +1,22 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import cred
+import cred 
+import sys
 
-client_credentials_manager = SpotifyClientCredentials(
-    client_id=cred.client_ID, client_secret=cred.client_SECRET
-)
-sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+try:
+    client_credentials_manager = SpotifyClientCredentials(
+        client_id=cred.client_ID, client_secret=cred.client_SECRET
+    )
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+except:
+    sys.exit("[!] Error: Client credentials not provided. Kindly add them in cred.py!")
 
 
 def get_artist_id(artist_name):
-    data = sp.search(q=f"artist:{artist_name}", type="artist")
+    try:
+        data = sp.search(q=f"artist:{artist_name}", type="artist")
+    except:
+        sys.exit("[!] Error: Network connection issue or Rate limit reached. Please try again")
     return data["artists"]["items"][0]["id"]
 
 
