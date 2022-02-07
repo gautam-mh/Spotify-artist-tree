@@ -1,5 +1,5 @@
 {
-    "href":"https: //api.spotify.com/v1/artists/36QJpDe2go2KgaRleHCDTp/albums?offset=0&limit=20&include_groups=album",
+    "href":"https://api.spotify.com/v1/artists/36QJpDe2go2KgaRleHCDTp/albums?offset=0&limit=20&include_groups=album",
     "items":[
        {
           "album_group":"album",
