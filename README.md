@@ -1,6 +1,6 @@
 # Spotify Artist Tree
 
-![Spotify Artist Tree](spotify-artist-tree.png)
+![Spotify Artist Tree].
 
 Spotify Artist Tree is a Python-based project that harnesses the power of the Spotify Web API to extract essential information about albums and tracks. By leveraging this API, the project enables users to easily retrieve key details such as Album ID, Album Name, Track ID, and Track Name. The streamlined process allows for seamless retrieval of desired information by inputting the Artist name or ID.
 
