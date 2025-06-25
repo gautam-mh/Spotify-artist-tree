@@ -1,0 +1,2 @@
+spotipy==2.19.0
+pytest==5.4.3 

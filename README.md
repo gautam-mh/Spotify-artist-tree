@@ -1,36 +1,100 @@
 # Spotify Artist Tree
 
-## About
+## Overview
+Spotify Artist Tree is a Python command-line tool that lets you explore any artist's discography using the Spotify Web API. Enter an artist's name, and the program prints a tree of all their albums and tracks, grouped by release year.
 
-Spotify Artist Tree is a Python-based project that harnesses the power of the Spotify Web API to extract essential information about albums and tracks. By leveraging this API, the project enables users to easily retrieve key details such as Album ID, Album Name, Track ID, and Track Name. The streamlined process allows for seamless retrieval of desired information by inputting the Artist name or ID.
+---
 
 ## Features
+- Fetches albums and tracks for any artist from Spotify
+- Groups albums by release year in a tree format
+- Simple, interactive CLI
+- Uses the official Spotify Web API via [spotipy](https://spotipy.readthedocs.io/)
 
-- Utilizes the Spotify Web API to gather music data
-- Extracts essential details: Album ID, Album Name, Track ID, and Track Name
-- Streamlined process for efficient retrieval based on Artist name or ID
+---
 
-## Installation
+## Requirements
+- Python 3.10+
+- Spotify Developer Account (for API credentials)
+- See `requirements.txt` for Python dependencies:
+  - spotipy==2.19.0
+  - pytest==5.4.3 (for testing)
 
-1. Clone the repository: `git clone https://github.com/your-username/spotify-artist-tree.git`
-2. Install the required dependencies: `pip install -r requirements.txt`
+---
+
+## Setup
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/spotify-artist-tree.git
+   cd spotify-artist-tree
+   ```
+2. **Install dependencies:**
+   ```sh
+   pip install -r requirements.txt
+   ```
+3. **Set up Spotify API credentials:**
+   - Create a file named `cred.py` in the `spotify_artist_tree/` directory with the following content:
+     ```python
+     client_ID = "YOUR_SPOTIFY_CLIENT_ID"
+     client_SECRET = "YOUR_SPOTIFY_CLIENT_SECRET"
+     ```
+   - Get your credentials from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
+
+---
 
 ## Usage
+1. **Run the program:**
+   ```sh
+   python -m spotify_artist_tree.main
+   ```
+2. **Follow the prompt:**
+   - Enter the name of an artist (e.g., `Led Zeppelin`).
+   - The program will display albums and tracks in a tree format, grouped by year.
+   - Enter `0` to exit.
 
-1. Run the Python script: `python main.py`
-2. Follow the prompts to input the Artist name or ID.
-3. The program will gather and display the requested information, including Album ID, Album Name, Track ID, and Track Name.
+### Example Output
+```
+>> Enter the name of artist to get the album tree
+>> Press 0 to stop
+Led Zeppelin
+1969
+  |--Led Zeppelin
+    |--Good Times Bad Times
+    |--Babe I'm Gonna Leave You
+    ...
+1971
+  |--Led Zeppelin IV
+    |--Black Dog
+    |--Rock and Roll
+    ...
+```
+
+---
+
+## Testing
+Run the tests with:
+```sh
+pytest
+```
+
+---
+
+## Troubleshooting
+- **Missing credentials:** If you see an error about missing credentials, ensure `cred.py` exists and contains valid Spotify API keys.
+- **Network/API errors:** If you hit rate limits or have network issues, try again later.
+- **No results:** The program always picks the first artist match. If you get the wrong artist, try a more specific name.
+
+---
 
 ## Contributing
+Contributions are welcome! Please open an issue or pull request for suggestions or improvements.
 
-Contributions are welcome! If you have any ideas, suggestions, or improvements, please submit a pull request. For major changes, please open an issue first to discuss potential updates.
+---
 
-## Acknowledgments
+## License
+MIT License (add your license here if different)
 
-We would like to express our gratitude to the Spotify Web API for providing the necessary functionality to access and retrieve music data efficiently.
+---
 
 ## Contact
-
-For any questions or inquiries, please contact gautammhiremath@gmail.com.
-
-Let's explore the musical world with Spotify Artist Tree!
+For questions, contact gautammhiremath@gmail.com.
