@@ -15,9 +15,11 @@ except:
 def get_artist_id(artist_name):
     try:
         data = sp.search(q=f"artist:{artist_name}", type="artist")
+        if not data["artists"]["items"]:
+            return None
+        return data["artists"]["items"][0]["id"]
     except:
         sys.exit("[!] Error: Network connection issue or Rate limit reached. Please try again")
-    return data["artists"]["items"][0]["id"]
 
 
 def get_albums(artist_id):

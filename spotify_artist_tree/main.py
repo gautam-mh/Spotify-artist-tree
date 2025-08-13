@@ -1,4 +1,4 @@
-from functions import builder
+from spotify_artist_tree.functions import builder
 import sys
 
 
