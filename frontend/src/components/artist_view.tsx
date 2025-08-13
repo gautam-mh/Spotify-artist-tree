@@ -7,24 +7,49 @@ type ArtistViewProps = {
     albumsByYear: AlbumsByYear
 }
 
+const containerStyle = {
+    maxWidth: '56rem',
+    margin: '0 auto',
+    padding: '2rem 0'
+}
+
+const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '2rem'
+}
+
+const artistImageStyle = {
+    position: 'relative' as const,
+    width: '8rem',
+    height: '8rem',
+    marginRight: '1.5rem',
+    borderRadius: '9999px',
+    overflow: 'hidden'
+}
+
 export const ArtistView = ({ artist, albumsByYear }: ArtistViewProps) => {
     return (
-        <div className="max-w-4xl mx-auto py-8">
-            <div className="flex items-center mb-8">
+        <div style={containerStyle}>
+            <div style={headerStyle}>
                 {artist.images?.[0] && (
-                    <div className="relative w-32 h-32 mr-6 rounded-full overflow-hidden">
+                    <div style={artistImageStyle}>
                         <Image
                             src={artist.images[0].url}
                             alt={artist.name}
                             fill
-                            className="object-cover"
+                            style={{ objectFit: 'cover' }}
                         />
                     </div>
                 )}
-                <h1 className="text-4xl font-bold">{artist.name}</h1>
+                <h1 style={{
+                    fontSize: '2.25rem',
+                    fontWeight: 'bold',
+                    color: '#111827'
+                }}>{artist.name}</h1>
             </div>
             
-            <div className="space-y-8">
+            <div>
                 {Object.entries(albumsByYear)
                     .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
                     .map(([year, albums]) => (

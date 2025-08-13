@@ -9,6 +9,47 @@ type AlbumTreeProps = {
     albums: Album[]
 }
 
+const albumCardStyle = {
+    background: 'white',
+    borderRadius: '0.5rem',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+    overflow: 'hidden',
+    marginBottom: '1rem'
+}
+
+const albumButtonStyle = {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '1rem',
+    cursor: 'pointer',
+    border: 'none',
+    background: 'white',
+    transition: 'background-color 0.2s'
+}
+
+const albumImageContainerStyle = {
+    position: 'relative' as const,
+    width: '4rem',
+    height: '4rem',
+    marginRight: '1rem',
+    borderRadius: '0.375rem',
+    overflow: 'hidden'
+}
+
+const trackContainerStyle = {
+    backgroundColor: '#F9FAFB',
+    padding: '0.5rem 1rem'
+}
+
+const trackItemStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0.5rem 0',
+    fontSize: '0.875rem',
+    color: '#374151'
+}
+
 export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
     const [expandedAlbum, setExpandedAlbum] = useState<string | null>(null)
 
@@ -17,30 +58,49 @@ export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
     }
 
     return (
-        <div className="mb-8">
-            <h2 className="text-2xl font-bold mb-4">{year}</h2>
-            <div className="space-y-4">
+        <div style={{ marginBottom: '2rem' }}>
+            <h2 style={{ 
+                fontSize: '1.5rem', 
+                fontWeight: 'bold',
+                color: '#111827',
+                marginBottom: '1rem'
+            }}>{year}</h2>
+            <div>
                 {albums.map((album) => (
-                    <div key={album.id} className="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div key={album.id} style={albumCardStyle}>
                         <button
                             onClick={() => toggleAlbum(album.id)}
-                            className="w-full flex items-center p-4 hover:bg-gray-50 transition-colors duration-200"
+                            style={albumButtonStyle}
+                            onMouseEnter={(e) => {
+                                (e.target as HTMLButtonElement).style.backgroundColor = '#F9FAFB'
+                            }}
+                            onMouseLeave={(e) => {
+                                (e.target as HTMLButtonElement).style.backgroundColor = 'white'
+                            }}
                         >
                             {album.images?.[0] && (
-                                <div className="relative w-16 h-16 mr-4 rounded-md overflow-hidden">
+                                <div style={albumImageContainerStyle}>
                                     <Image
                                         src={album.images[0].url}
                                         alt={album.name}
                                         fill
-                                        className="object-cover"
+                                        style={{ objectFit: 'cover' }}
                                     />
                                 </div>
                             )}
-                            <span className="flex-grow text-left font-medium">{album.name}</span>
+                            <span style={{ 
+                                flex: 1,
+                                textAlign: 'left',
+                                fontWeight: 500,
+                                color: '#111827'
+                            }}>{album.name}</span>
                             <ChevronDownIcon
-                                className={`w-5 h-5 transform transition-transform duration-200 ${
-                                    expandedAlbum === album.id ? 'rotate-180' : ''
-                                }`}
+                                style={{
+                                    width: '1.25rem',
+                                    height: '1.25rem',
+                                    transform: expandedAlbum === album.id ? 'rotate(180deg)' : 'rotate(0deg)',
+                                    transition: 'transform 0.2s'
+                                }}
                             />
                         </button>
                         <AnimatePresence>
@@ -50,19 +110,24 @@ export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
                                     animate={{ height: 'auto' }}
                                     exit={{ height: 0 }}
                                     transition={{ duration: 0.2 }}
-                                    className="overflow-hidden"
+                                    style={{ overflow: 'hidden' }}
                                 >
-                                    <div className="px-4 py-2 bg-gray-50">
+                                    <div style={trackContainerStyle}>
                                         {album.tracks.map((track: Track) => (
                                             <div
                                                 key={track.id}
-                                                className="py-2 flex items-center text-sm text-gray-700"
+                                                style={trackItemStyle}
                                             >
-                                                <span className="w-8 text-right text-gray-400">
+                                                <span style={{ 
+                                                    width: '2rem',
+                                                    textAlign: 'right',
+                                                    color: '#6B7280',
+                                                    marginRight: '1rem'
+                                                }}>
                                                     {track.track_number}.
                                                 </span>
-                                                <span className="ml-4">{track.name}</span>
-                                                <span className="ml-auto text-gray-400">
+                                                <span style={{ flex: 1 }}>{track.name}</span>
+                                                <span style={{ color: '#6B7280' }}>
                                                     {formatDuration(track.duration_ms)}
                                                 </span>
                                             </div>

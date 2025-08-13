@@ -17,21 +17,46 @@ export const SearchBar = ({ onSearch, isLoading = false }: SearchBarProps) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="w-full max-w-2xl mx-auto">
-            <div className="relative flex items-center">
+        <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: '42rem', margin: '0 auto' }}>
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for an artist..."
-                    className="w-full px-4 py-3 pl-12 text-lg rounded-full border border-gray-300 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
+                    style={{
+                        width: '100%',
+                        padding: '0.75rem 1rem 0.75rem 3rem',
+                        fontSize: '1.125rem',
+                        borderRadius: '9999px',
+                        border: '1px solid #D1D5DB',
+                        outline: 'none',
+                        transition: 'all 0.2s',
+                    }}
                     disabled={isLoading}
                 />
-                <MagnifyingGlassIcon className="absolute left-4 w-5 h-5 text-gray-400" />
+                <MagnifyingGlassIcon 
+                    style={{
+                        position: 'absolute',
+                        left: '1rem',
+                        width: '1.25rem',
+                        height: '1.25rem',
+                        color: '#9CA3AF'
+                    }}
+                />
                 <button
                     type="submit"
                     disabled={isLoading || !query.trim()}
-                    className="absolute right-3 px-4 py-1.5 bg-green-500 text-white rounded-full hover:bg-green-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
+                    style={{
+                        position: 'absolute',
+                        right: '0.75rem',
+                        padding: '0.375rem 1rem',
+                        backgroundColor: isLoading || !query.trim() ? '#D1D5DB' : '#10B981',
+                        color: 'white',
+                        borderRadius: '9999px',
+                        cursor: isLoading || !query.trim() ? 'not-allowed' : 'pointer',
+                        transition: 'background-color 0.2s'
+                    }}
                 >
                     {isLoading ? 'Searching...' : 'Search'}
                 </button>

@@ -5,6 +5,9 @@ import { ArtistView } from '@/components/artist_view'
 import { useState } from 'react'
 import { ArtistTreeData } from '@/types/spotify'
 
+// For debugging
+console.log('Page component loaded')
+
 export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [artistData, setArtistData] = useState<ArtistTreeData | null>(null)
@@ -31,10 +34,16 @@ export default function Home() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="py-12">
-                    <h1 className="text-4xl font-bold text-center mb-8">
+        <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
+            <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
+                <div style={{ paddingBottom: '3rem' }}>
+                    <h1 style={{ 
+                        textAlign: 'center', 
+                        marginBottom: '2rem',
+                        fontSize: '2.5rem',
+                        fontWeight: 'bold',
+                        color: '#111827'
+                    }}>
                         Spotify Artist Tree
                     </h1>
                     <SearchBar onSearch={handleSearch} isLoading={isLoading} />
