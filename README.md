@@ -1,100 +1,126 @@
-# Spotify Artist Tree
+# 🎵 Spotify Artist Tree
 
-## Overview
-Spotify Artist Tree is a Python command-line tool that lets you explore any artist's discography using the Spotify Web API. Enter an artist's name, and the program prints a tree of all their albums and tracks, grouped by release year.
+A Python CLI tool that generates a beautiful tree visualization of any artist's discography using the Spotify Web API. The tool organizes albums chronologically and displays all tracks within each album, creating an easy-to-read hierarchical view of an artist's musical journey.
 
----
+## ✨ Features
 
-## Features
-- Fetches albums and tracks for any artist from Spotify
-- Groups albums by release year in a tree format
-- Simple, interactive CLI
-- Uses the official Spotify Web API via [spotipy](https://spotipy.readthedocs.io/)
+- **Artist Search**: Automatically finds artists using Spotify's search API
+- **Chronological Organization**: Groups albums by release year in descending order
+- **Complete Discography**: Shows all albums and their tracks in a tree structure
+- **Error Handling**: Graceful handling of network issues, rate limits, and missing data
+- **Simple Interface**: Easy-to-use command-line interface with clear prompts
+- **Zero Configuration**: Just add your Spotify API credentials and you're ready to go
 
----
+## 🛠️ Technical Requirements
 
-## Requirements
-- Python 3.10+
+- Python 3.10 or higher
 - Spotify Developer Account (for API credentials)
-- See `requirements.txt` for Python dependencies:
-  - spotipy==2.19.0
-  - pytest==5.4.3 (for testing)
+- Dependencies:
+  - spotipy (^2.19.0) - Official Spotify Web API client for Python
+  - pytest (^5.2) - For running tests
 
----
+## 🚀 Quick Start
 
-## Setup
-1. **Clone the repository:**
-   ```sh
+1. **Clone and Setup**
+   ```bash
    git clone https://github.com/your-username/spotify-artist-tree.git
    cd spotify-artist-tree
    ```
-2. **Install dependencies:**
-   ```sh
+
+2. **Install Dependencies**
+   ```bash
+   # Using pip
    pip install -r requirements.txt
+
+   # OR using Poetry (recommended)
+   poetry install
    ```
-3. **Set up Spotify API credentials:**
-   - Create a file named `cred.py` in the `spotify_artist_tree/` directory with the following content:
+
+3. **Configure Spotify API**
+   - Create a new app in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+   - Create `spotify_artist_tree/cred.py` with your credentials:
      ```python
-     client_ID = "YOUR_SPOTIFY_CLIENT_ID"
-     client_SECRET = "YOUR_SPOTIFY_CLIENT_SECRET"
+     client_ID = "your_client_id_here"
+     client_SECRET = "your_client_secret_here"
      ```
-   - Get your credentials from the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
 
----
-
-## Usage
-1. **Run the program:**
-   ```sh
+4. **Run the Program**
+   ```bash
    python -m spotify_artist_tree.main
    ```
-2. **Follow the prompt:**
-   - Enter the name of an artist (e.g., `Led Zeppelin`).
-   - The program will display albums and tracks in a tree format, grouped by year.
-   - Enter `0` to exit.
 
-### Example Output
-```
+## 🎯 Usage Example
+
+```bash
 >> Enter the name of artist to get the album tree
 >> Press 0 to stop
 Led Zeppelin
-1969
-  |--Led Zeppelin
-    |--Good Times Bad Times
-    |--Babe I'm Gonna Leave You
+
+2015
+  |--Coda (Deluxe Edition)
+    |--We're Gonna Groove - Rough Mix
+    |--Poor Tom - Rough Mix
     ...
-1971
-  |--Led Zeppelin IV
-    |--Black Dog
-    |--Rock and Roll
+1979
+  |--In Through the Out Door
+    |--In the Evening
+    |--South Bound Saurez
     ...
 ```
 
----
+## 🔧 Project Structure
 
-## Testing
-Run the tests with:
-```sh
-pytest
+```
+spotify_artist_tree/
+├── api.py          # Spotify API interaction functions
+├── functions.py    # Core logic for building the album tree
+└── main.py         # CLI interface and entry point
 ```
 
+### Key Components
+
+- **api.py**: Handles all Spotify API interactions
+  - Authentication using client credentials
+  - Artist search functionality
+  - Album and track data retrieval
+
+- **functions.py**: Contains the core `builder` function that:
+  - Processes artist search results
+  - Groups albums by year
+  - Generates the tree structure output
+
+- **main.py**: Provides the CLI interface with:
+  - Interactive input loop
+  - Simple exit mechanism
+  - Error handling display
+
+## 🐛 Troubleshooting
+
+- **Artist Not Found**: Check the spelling or try using the artist's exact Spotify name
+- **Rate Limiting**: If you hit API rate limits, wait a few minutes before retrying
+- **Authentication Errors**: Verify your credentials in `cred.py` are correct and properly formatted
+- **Network Issues**: Ensure you have a stable internet connection
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 📧 Contact
+
+For questions or feedback:
+- Email: gautammhiremath@gmail.com
+- GitHub Issues: [Create an issue](https://github.com/your-username/spotify-artist-tree/issues)
+
 ---
 
-## Troubleshooting
-- **Missing credentials:** If you see an error about missing credentials, ensure `cred.py` exists and contains valid Spotify API keys.
-- **Network/API errors:** If you hit rate limits or have network issues, try again later.
-- **No results:** The program always picks the first artist match. If you get the wrong artist, try a more specific name.
-
----
-
-## Contributing
-Contributions are welcome! Please open an issue or pull request for suggestions or improvements.
-
----
-
-## License
-MIT License (add your license here if different)
-
----
-
-## Contact
-For questions, contact gautammhiremath@gmail.com.
+Made with ❤️ using Python and Spotify Web API
