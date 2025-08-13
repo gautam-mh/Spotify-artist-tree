@@ -2,7 +2,9 @@
 
 import { SearchBar } from '@/components/search_bar'
 import { ArtistView } from '@/components/artist_view'
+import { LoadingState } from '@/components/loading_state'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { ArtistTreeData } from '@/types/spotify'
 
 // For debugging
@@ -14,23 +16,40 @@ export default function Home() {
     const [error, setError] = useState<string | null>(null)
 
     const handleSearch = async (query: string) => {
+        if (!query.trim()) {
+            toast.error('Please enter an artist name')
+            return
+        }
+
         setIsLoading(true)
         setError(null)
         
-        try {
-            // TODO: Replace with actual API endpoint
-            const response = await fetch(`/api/artist-tree?q=${encodeURIComponent(query)}`)
-            if (!response.ok) {
-                throw new Error('Failed to fetch artist data')
+        const searchPromise = (async () => {
+            try {
+                const response = await fetch(`/api/artist-tree?q=${encodeURIComponent(query)}`)
+                const data = await response.json()
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch artist data')
+                }
+                
+                setArtistData(data)
+                return data
+            } catch (err) {
+                const errorMessage = err instanceof Error ? err.message : 'Failed to load artist data'
+                setError(errorMessage)
+                console.error(err)
+                throw err
+            } finally {
+                setIsLoading(false)
             }
-            const data = await response.json()
-            setArtistData(data)
-        } catch (err) {
-            setError('Failed to load artist data. Please try again.')
-            console.error(err)
-        } finally {
-            setIsLoading(false)
-        }
+        })()
+
+        await toast.promise(searchPromise, {
+            loading: 'Searching for artist...',
+            success: (data) => `Found ${data.artist.name}'s discography!`,
+            error: (err) => err instanceof Error ? err.message : 'Failed to load artist data'
+        })
     }
 
     return (
@@ -49,13 +68,21 @@ export default function Home() {
                     <SearchBar onSearch={handleSearch} isLoading={isLoading} />
                     
                     {error && (
-                        <div className="mt-8 p-4 bg-red-50 text-red-700 rounded-lg">
+                        <div style={{
+                            marginTop: '2rem',
+                            padding: '1rem',
+                            backgroundColor: '#FEF2F2',
+                            color: '#B91C1C',
+                            borderRadius: '0.5rem'
+                        }}>
                             {error}
                         </div>
                     )}
 
-                    {artistData && (
-                        <div className="mt-12">
+                    {isLoading ? (
+                        <LoadingState />
+                    ) : artistData && (
+                        <div style={{ marginTop: '3rem' }}>
                             <ArtistView
                                 artist={artistData.artist}
                                 albumsByYear={artistData.albumsByYear}

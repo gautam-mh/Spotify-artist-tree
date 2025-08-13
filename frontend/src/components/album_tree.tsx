@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import toast from 'react-hot-toast'
 import { Album, Track } from '@/types/spotify'
 import Image from 'next/image'
 
@@ -50,8 +51,32 @@ const trackItemStyle = {
     color: '#374151'
 }
 
+const spotifyLinkStyle = {
+    color: '#1DB954',
+    textDecoration: 'none',
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '0.5rem',
+    padding: '0.25rem 0.5rem',
+    borderRadius: '0.25rem',
+    fontSize: '0.75rem',
+    transition: 'background-color 0.2s',
+    backgroundColor: 'transparent',
+    cursor: 'pointer'
+}
+
 export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
     const [expandedAlbum, setExpandedAlbum] = useState<string | null>(null)
+    
+    // Debug log to check if we're getting Spotify URLs
+    console.log('Albums with URLs:', albums.map(album => ({
+        name: album.name,
+        spotifyUrl: album.external_urls?.spotify,
+        trackUrls: album.tracks?.map(track => ({
+            name: track.name,
+            spotifyUrl: track.external_urls?.spotify
+        }))
+    })))
 
     const toggleAlbum = (albumId: string) => {
         setExpandedAlbum(expandedAlbum === albumId ? null : albumId)
@@ -88,12 +113,42 @@ export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
                                     />
                                 </div>
                             )}
-                            <span style={{ 
+                            <div style={{ 
                                 flex: 1,
                                 textAlign: 'left',
-                                fontWeight: 500,
-                                color: '#111827'
-                            }}>{album.name}</span>
+                                display: 'flex',
+                                flexDirection: 'column' as const,
+                                gap: '0.25rem'
+                            }}>
+                                <span style={{
+                                    fontWeight: 500,
+                                    color: '#111827'
+                                }}>{album.name}</span>
+                                {album.external_urls?.spotify ? (
+                                    <a
+                                        href={album.external_urls.spotify}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toast.success(`Opening ${album.name} in Spotify`);
+                                        }}
+                                        style={spotifyLinkStyle}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.backgroundColor = '#1DB95410'
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.backgroundColor = 'transparent'
+                                        }}
+                                    >
+                                        Open in Spotify
+                                    </a>
+                                ) : (
+                                    <span style={{ ...spotifyLinkStyle, color: '#6B7280' }}>
+                                        No Spotify Link
+                                    </span>
+                                )}
+                            </div>
                             <ChevronDownIcon
                                 style={{
                                     width: '1.25rem',
@@ -126,8 +181,38 @@ export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
                                                 }}>
                                                     {track.track_number}.
                                                 </span>
-                                                <span style={{ flex: 1 }}>{track.name}</span>
-                                                <span style={{ color: '#6B7280' }}>
+                                                <div style={{ 
+                                                    flex: 1,
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    gap: '0.25rem'
+                                                }}>
+                                                    <span>{track.name}</span>
+                                                    {track.external_urls?.spotify ? (
+                                                        <a
+                                                            href={track.external_urls.spotify}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            style={spotifyLinkStyle}
+                                                            onClick={(e) => {
+                                                                toast.success(`Playing ${track.name} on Spotify`);
+                                                            }}
+                                                            onMouseEnter={(e) => {
+                                                                e.currentTarget.style.backgroundColor = '#1DB95410'
+                                                            }}
+                                                            onMouseLeave={(e) => {
+                                                                e.currentTarget.style.backgroundColor = 'transparent'
+                                                            }}
+                                                        >
+                                                            Play on Spotify
+                                                        </a>
+                                                    ) : (
+                                                        <span style={{ ...spotifyLinkStyle, color: '#6B7280' }}>
+                                                            No Spotify Link
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <span style={{ color: '#6B7280', marginLeft: '1rem' }}>
                                                     {formatDuration(track.duration_ms)}
                                                 </span>
                                             </div>

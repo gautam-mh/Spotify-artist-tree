@@ -3,6 +3,9 @@ export type Track = {
     name: string
     duration_ms: number
     track_number: number
+    external_urls?: {
+        spotify: string
+    }
 }
 
 export type Album = {
@@ -15,6 +18,9 @@ export type Album = {
         width: number
     }>
     tracks?: Track[]
+    external_urls?: {
+        spotify: string
+    }
 }
 
 export type Artist = {
