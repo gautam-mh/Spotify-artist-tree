@@ -1,2 +1,0 @@
-Enter the name of artist to get the album tree
-Press 0 to stop
