@@ -51,15 +51,24 @@ export default function Home() {
     }, [isLoading])
 
     return (
-        <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>
-            <div style={{ maxWidth: '80rem', margin: '0 auto' }}>
-                <div style={{ paddingBottom: '3rem' }}>
+        <main style={{ 
+                minHeight: '100vh', 
+                padding: 'clamp(1rem, 3vw, 2rem) clamp(0.5rem, 2vw, 1rem)',
+                width: '100%'
+            }}>
+            <div style={{ 
+                maxWidth: '80rem', 
+                margin: '0 auto',
+                width: '100%'
+            }}>
+                <div style={{ paddingBottom: 'clamp(2rem, 5vw, 3rem)' }}>
                     <h1 style={{ 
                         textAlign: 'center', 
-                        marginBottom: '2rem',
-                        fontSize: '2.5rem',
+                        marginBottom: 'clamp(1.5rem, 4vw, 2rem)',
+                        fontSize: 'clamp(2rem, 6vw, 2.5rem)',
                         fontWeight: 'bold',
-                        color: '#111827'
+                        color: '#111827',
+                        lineHeight: '1.2'
                     }}>
                         Spotify Artist Tree
                     </h1>

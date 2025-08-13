@@ -10,13 +10,16 @@ type ArtistViewProps = {
 const containerStyle = {
     maxWidth: '56rem',
     margin: '0 auto',
-    padding: '2rem 0'
+    padding: '2rem 1rem',
+    width: '100%'
 }
 
 const headerStyle = {
     display: 'flex',
     alignItems: 'center',
-    marginBottom: '2rem'
+    marginBottom: '2rem',
+    flexWrap: 'wrap' as const,
+    gap: '1rem'
 }
 
 const artistImageStyle = {
@@ -43,9 +46,10 @@ export const ArtistView = ({ artist, albumsByYear }: ArtistViewProps) => {
                     </div>
                 )}
                 <h1 style={{
-                    fontSize: '2.25rem',
+                    fontSize: 'clamp(1.5rem, 5vw, 2.25rem)',
                     fontWeight: 'bold',
-                    color: '#111827'
+                    color: '#111827',
+                    lineHeight: '1.2'
                 }}>{artist.name}</h1>
             </div>
             

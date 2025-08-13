@@ -21,12 +21,14 @@ const albumCardStyle = {
 const albumButtonStyle = {
     width: '100%',
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: '1rem',
     cursor: 'pointer',
     border: 'none',
     background: 'white',
-    transition: 'background-color 0.2s'
+    transition: 'background-color 0.2s',
+    gap: '1rem',
+    flexWrap: 'wrap' as const
 }
 
 const albumImageContainerStyle = {
@@ -48,7 +50,9 @@ const trackItemStyle = {
     alignItems: 'center',
     padding: '0.5rem 0',
     fontSize: '0.875rem',
-    color: '#374151'
+    color: '#374151',
+    flexWrap: 'wrap' as const,
+    gap: '0.5rem'
 }
 
 const spotifyLinkStyle = {
@@ -85,7 +89,7 @@ export const AlbumTree = ({ year, albums }: AlbumTreeProps) => {
     return (
         <div style={{ marginBottom: '2rem' }}>
             <h2 style={{ 
-                fontSize: '1.5rem', 
+                fontSize: 'clamp(1.25rem, 4vw, 1.5rem)', 
                 fontWeight: 'bold',
                 color: '#111827',
                 marginBottom: '1rem'
