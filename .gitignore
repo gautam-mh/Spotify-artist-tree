@@ -44,3 +44,4 @@ poetry/core/*
 
 cred.py
 .env
+/frontend/.env.local

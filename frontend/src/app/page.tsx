@@ -3,19 +3,17 @@
 import { SearchBar } from '@/components/search_bar'
 import { ArtistView } from '@/components/artist_view'
 import { LoadingState } from '@/components/loading_state'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { ArtistTreeData } from '@/types/spotify'
-
-// For debugging
-console.log('Page component loaded')
 
 export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
     const [artistData, setArtistData] = useState<ArtistTreeData | null>(null)
     const [error, setError] = useState<string | null>(null)
 
-    const handleSearch = async (query: string) => {
+    const handleSearch = useCallback(async (query: string) => {
+        if (isLoading) return; // Prevent multiple simultaneous searches
         if (!query.trim()) {
             toast.error('Please enter an artist name')
             return
@@ -50,7 +48,7 @@ export default function Home() {
             success: (data) => `Found ${data.artist.name}'s discography!`,
             error: (err) => err instanceof Error ? err.message : 'Failed to load artist data'
         })
-    }
+    }, [isLoading])
 
     return (
         <main style={{ minHeight: '100vh', padding: '2rem 1rem' }}>

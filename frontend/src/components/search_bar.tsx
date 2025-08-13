@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDebounce } from '@/hooks/use_debounce'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 
 type SearchBarProps = {
@@ -8,11 +9,12 @@ type SearchBarProps = {
 
 export const SearchBar = ({ onSearch, isLoading = false }: SearchBarProps) => {
     const [query, setQuery] = useState('')
+    const debouncedQuery = useDebounce(query, 300) // 300ms delay
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        if (query.trim()) {
-            onSearch(query.trim())
+        if (debouncedQuery.trim()) {
+            onSearch(debouncedQuery.trim())
         }
     }
 
